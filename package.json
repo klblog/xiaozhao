@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "vuepress dev .",
     "start": "vuepress dev .",
-    "build": "vuepress build ."
+    "build": "vuepress build .",
+    "deploy": "bash deploy.sh",
+    "release": "npm run build && npm run deploy"
   },
   "dependencies": {
     "vuepress": "2.0.0-rc.0",

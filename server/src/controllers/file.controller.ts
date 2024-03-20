@@ -2,6 +2,8 @@ import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, Res } from
 import { Request, Response } from 'express';
 import { env } from '../config/host';
 import { FileService } from '../services/file.service';
+import type  { ICreateFileOptions } from 'src/interface/file';
+import { IFileStatus } from 'src/enums/file';
 
 @Controller({ host: env.base, path: '/api/blogs'})
 export class FileController {
@@ -27,8 +29,14 @@ export class FileController {
 
   /** 新增、修改、删除 markdown 文件 */
   @Post('/update/file')
-  async updateFile(@Body() body, @Req() req: Request) {
+  async updateFile(@Body() body: ICreateFileOptions, @Req() req: Request) {
     console.log(body)
-    return '创建成功'
+    if(body.status === IFileStatus.delete) {
+     const removeRes  = await this.fileService.removeMarkdownFileInjectable(body.categories, body.name)
+     return removeRes
+    }
+
+    const updateRes = await this.fileService.createMarkdownFileInjectable(body)
+    return updateRes
   }
 }

@@ -13,5 +13,6 @@ export declare class FileService {
     }[];
     private getMarkdownFiles;
     createFolderInjectable(originFolderName: string, folderName: string): Promise<"创建成功" | "删除成功" | "修改成功">;
-    createMarkdownFileInjectable(options: ICreateFileOptions): void;
+    createMarkdownFileInjectable(options: ICreateFileOptions): Promise<string>;
+    removeMarkdownFileInjectable(categories: string, fileName: string): Promise<string>;
 }

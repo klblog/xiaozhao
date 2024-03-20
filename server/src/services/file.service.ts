@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { readFileSync, readdirSync, promises } from 'fs'
+import { readFileSync, readdirSync, promises, existsSync, writeFileSync, mkdirSync, renameSync } from 'fs'
 import { join } from 'path'
 import * as matter from 'gray-matter';
 import { ICreateFileOptions } from 'src/interface/file';
+import { IFileStatus } from 'src/enums/file';
 
 @Injectable()
 export class FileService {
@@ -96,7 +97,7 @@ export class FileService {
   // ------ ------
 
   /**
-   * 在blogs文件夹下的指定文件夹中创建markdown文件
+   * 在blogs文件夹下的指定文件夹中创建、修改markdown文件
   * @param {Object} options - 创建markdown文件所需的选项
   * @param {string} options.title - 文件的标题
   * @param {string[]} options.tags - 文件的标签
@@ -106,13 +107,69 @@ export class FileService {
    * @return {string} 创建结果
   */
 
-  createMarkdownFileInjectable(options: ICreateFileOptions) {
-    const { title, tags, date, content, categories } = options
+  async createMarkdownFileInjectable(options: ICreateFileOptions) {
+    const { origin, name, title, tags, date, content, categories, status } = options
 
     const basePath = join(__dirname, '../', '../', '../blogs')
     const folderPath = join(basePath, categories)
-    
-    
+
+    if(!existsSync(folderPath)) {
+      mkdirSync(folderPath, { recursive: true })
+    }
+
+    const filePath = join(folderPath, `${name}.md`)
+    const originPath = join(folderPath, `${origin}.md`)
+
+    // 前置判断：创建
+    if(status  === IFileStatus.create && existsSync(filePath)) {
+      throw new HttpException('文件名已被创建，请更换名称', HttpStatus.BAD_REQUEST)
+    }
+
+    if(status === IFileStatus.update && !existsSync(originPath)) {
+      throw new HttpException('不存在该文件', HttpStatus.BAD_REQUEST)
+    }
+
+    // 修改、创建文件
+    const fileContent =`---
+title: ${title},
+date: ${date},
+tags: 
+  - ${tags.join('\n - ')}
+categories:
+  - ${categories}
+---
+
+${content}
+`
+    await writeFileSync(filePath, fileContent, 'utf-8')
+
+    // 修改文件时，如果修改前后名称不一致，需要删除原来的文件
+    if(origin !== name && existsSync(originPath)) {
+      this.removeMarkdownFileInjectable(categories, origin)
+    }
+
+    return '保存成功'
+    // 删除文件
   }
+
+   async removeMarkdownFileInjectable(categories: string, fileName: string) {
+    const basePath = join(__dirname, '../', '../', '../blogs')
+    const folderPath = join(basePath, categories)
+    const filePath = join(folderPath, `${fileName}.md`)
     
+    const backupsBlogs = join(__dirname, '../', '../', '../backupsBlogs')
+    let backupsBlogsFilePath =  join(backupsBlogs, `${fileName}.md`)
+    // 检查文件是否存在
+    if(!existsSync(filePath)) {
+      throw new HttpException('文件不存在', HttpStatus.NOT_FOUND)
+    }
+
+    if(existsSync(backupsBlogsFilePath)) {
+      const timestamp = Date.now();
+      backupsBlogsFilePath = join(backupsBlogs, `${fileName}-${timestamp}.md`)
+    }
+    // 移动 filePath 文件到 backupsBlogs
+    await renameSync(filePath, backupsBlogsFilePath)
+    return '删除成功'
+  }
 }

@@ -16,6 +16,7 @@ exports.FileController = void 0;
 const common_1 = require("@nestjs/common");
 const host_1 = require("../config/host");
 const file_service_1 = require("../services/file.service");
+const file_1 = require("../enums/file");
 let FileController = class FileController {
     constructor(fileService) {
         this.fileService = fileService;
@@ -34,7 +35,12 @@ let FileController = class FileController {
     }
     async updateFile(body, req) {
         console.log(body);
-        return '创建成功';
+        if (body.status === file_1.IFileStatus.delete) {
+            const removeRes = await this.fileService.removeMarkdownFileInjectable(body.categories, body.name);
+            return removeRes;
+        }
+        const updateRes = await this.fileService.createMarkdownFileInjectable(body);
+        return updateRes;
     }
 };
 exports.FileController = FileController;

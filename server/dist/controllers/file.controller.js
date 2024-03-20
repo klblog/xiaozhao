@@ -24,17 +24,45 @@ let FileController = class FileController {
         const res = this.fileService.getFileInjectable();
         return res;
     }
+    async createFolder(body, req) {
+        const bodyKeys = Object.keys(body);
+        if (bodyKeys.length !== 2 || !bodyKeys.includes('originName') || !bodyKeys.includes('newName')) {
+            throw new common_1.HttpException('参数错误', common_1.HttpStatus.BAD_REQUEST);
+        }
+        const res = await this.fileService.createFolderInjectable(body.originName, body.newName);
+        return res;
+    }
+    async updateFile(body, req) {
+        console.log(body);
+        return '创建成功';
+    }
 };
 exports.FileController = FileController;
 __decorate([
-    (0, common_1.Get)('/blogs'),
+    (0, common_1.Get)('/list'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], FileController.prototype, "getFile", null);
+__decorate([
+    (0, common_1.Post)('/create/folder'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], FileController.prototype, "createFolder", null);
+__decorate([
+    (0, common_1.Post)('/update/file'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], FileController.prototype, "updateFile", null);
 exports.FileController = FileController = __decorate([
-    (0, common_1.Controller)({ host: host_1.env.base, path: '/api' }),
+    (0, common_1.Controller)({ host: host_1.env.base, path: '/api/blogs' }),
     __metadata("design:paramtypes", [file_service_1.FileService])
 ], FileController);
 //# sourceMappingURL=file.controller.js.map

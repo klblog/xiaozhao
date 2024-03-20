@@ -34,6 +34,47 @@ let FileService = class FileService {
         });
         return mds;
     }
+    async createFolderInjectable(originFolderName, folderName) {
+        const basePath = (0, path_1.join)(__dirname, '../', '../', '../blogs');
+        const originPath = (0, path_1.join)(basePath, originFolderName);
+        const newPath = (0, path_1.join)(basePath, folderName);
+        if (!originFolderName) {
+            try {
+                await fs_1.promises.mkdir(newPath);
+                return '创建成功';
+            }
+            catch (error) {
+                throw new common_1.HttpException('创建失败', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        try {
+            await fs_1.promises.access(originPath);
+        }
+        catch (error) {
+            throw new common_1.HttpException('原始文件夹不存在', common_1.HttpStatus.NOT_FOUND);
+        }
+        if (!folderName && originFolderName) {
+            try {
+                await fs_1.promises.rm(originPath, { recursive: true });
+                return '删除成功';
+            }
+            catch (error) {
+                throw new common_1.HttpException('删除失败', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        try {
+            await fs_1.promises.rename(originPath, newPath);
+            return '修改成功';
+        }
+        catch (error) {
+            throw new common_1.HttpException('修改失败', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    createMarkdownFileInjectable(options) {
+        const { title, tags, date, content, categories } = options;
+        const basePath = (0, path_1.join)(__dirname, '../', '../', '../blogs');
+        const folderPath = (0, path_1.join)(basePath, categories);
+    }
 };
 exports.FileService = FileService;
 exports.FileService = FileService = __decorate([

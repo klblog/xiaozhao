@@ -1,3 +1,4 @@
+import { ICreateFileOptions } from 'src/interface/file';
 export declare class FileService {
     getFileInjectable(): {
         name: string;
@@ -11,4 +12,6 @@ export declare class FileService {
         }[];
     }[];
     private getMarkdownFiles;
+    createFolderInjectable(originFolderName: string, folderName: string): Promise<"创建成功" | "删除成功" | "修改成功">;
+    createMarkdownFileInjectable(options: ICreateFileOptions): void;
 }

@@ -14,4 +14,6 @@ export declare class FileController {
             categories: string;
         }[];
     }[]>;
+    createFolder(body: any, req: Request): Promise<"创建成功" | "删除成功" | "修改成功">;
+    updateFile(body: any, req: Request): Promise<string>;
 }

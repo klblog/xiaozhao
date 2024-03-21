@@ -10,7 +10,7 @@ export class ReleaseService {
   */
   async releaseVuepress() {
    try {
-    const basePath = join(__dirname, '../deploy')
+    const basePath = join(__dirname,'../', '../deploy')
     const filePath = join(basePath, 'release.sh')
     // 执行release.sh 脚本
     const res = await this.exec(filePath)

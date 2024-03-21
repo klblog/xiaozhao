@@ -1,7 +1,6 @@
 import { Get, Post, Body, Req, Res, HttpStatus, HttpException, Controller } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { env } from 'src/config/host';
-import { HomeService } from 'src/services/home.service';
 import { ReleaseService } from 'src/services/release.service';
 
 

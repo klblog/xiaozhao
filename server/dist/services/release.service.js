@@ -13,7 +13,7 @@ const child_process_1 = require("child_process");
 let ReleaseService = class ReleaseService {
     async releaseVuepress() {
         try {
-            const basePath = (0, path_1.join)(__dirname, '../deploy');
+            const basePath = (0, path_1.join)(__dirname, '../', '../deploy');
             const filePath = (0, path_1.join)(basePath, 'release.sh');
             const res = await this.exec(filePath);
             return `发布成功：${res}`;

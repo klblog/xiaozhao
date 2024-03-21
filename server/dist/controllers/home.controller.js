@@ -28,22 +28,44 @@ let HomeController = class HomeController {
         const res = this.homeService.setHomeDetailMd(body);
         return res;
     }
+    async getNavItem(req) {
+        const res = this.homeService.getHomeNavItem();
+        return res;
+    }
+    async setNavItem(body) {
+        const res = this.homeService.setHomeNavItem(body);
+        return res;
+    }
 };
 exports.HomeController = HomeController;
 __decorate([
-    (0, common_1.Get)('/detail'),
+    (0, common_1.Get)('/decorate/detail'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HomeController.prototype, "getDetail", null);
 __decorate([
-    (0, common_1.Post)('/detailSetting'),
+    (0, common_1.Post)('/decorate/detailSetting'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HomeController.prototype, "setDetail", null);
+__decorate([
+    (0, common_1.Get)('/navigation/item'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], HomeController.prototype, "getNavItem", null);
+__decorate([
+    (0, common_1.Post)('/navigation/itemSetting'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], HomeController.prototype, "setNavItem", null);
 exports.HomeController = HomeController = __decorate([
     (0, common_1.Controller)({ host: host_1.env.base, path: '/api/home' }),
     __metadata("design:paramtypes", [home_service_1.HomeService])

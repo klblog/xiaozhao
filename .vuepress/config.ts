@@ -1,25 +1,29 @@
 import { defineUserConfig } from "vuepress";
 import type { DefaultThemeOptions } from "vuepress";
 import recoTheme from "vuepress-theme-reco";
+import { readFileSync } from 'fs';
+import { join } from 'path'
+const config = JSON.parse(readFileSync(join(__dirname, './json/config.json'), 'utf-8'));
 
 export default defineUserConfig({
-  title: "设计师小赵",
-  description: "这是设计师小赵总结的干货",
+  title: config.title,
+  description: config.description,
   theme: recoTheme({
-    colorMode: 'dark', //  默认外观颜色
+    colorMode: config.colorMode, //  默认外观颜色
     style: "@vuepress-reco/style-default",
     logo: "/logo.png",
-    author: "小赵",
+    author: config.author,
     authorAvatar: "/head.png",
     // docsRepo: "https://github.com/klblog/xiaozhao.git",
     // docsBranch: "master",
     // docsDir: "docs",
-    // lastUpdatedText: "",
+    lastUpdated: false,
+    lastUpdatedText: '发布时间',
     autoSetBlogCategories: true, // 自动设置分类
     autoAddCategoryToNavbar: {
-      location: 1, // 默认 0
-      categoryText: '作品集', // 默认 categories
-      tagText: '干货' // 默认 tags
+      location: config.autoAddCategoryToNavbar.location, // 默认 0
+      categoryText: config.autoAddCategoryToNavbar.categoryText, // 默认 categories
+      tagText: config.autoAddCategoryToNavbar.tagText // 默认 tags
     },
     autoSetSeries: true,
     // 文档路径
@@ -37,37 +41,39 @@ export default defineUserConfig({
       "/docs/contact/": [
         {
           text: "联系方式",
-          children: ["微信", "小红书", "电话"],
+          children: [ "小红书.html", "微信.html", "电话.html"],
         },
+        {
+          text: config.bulletin.body5Text,
+          children: ["微信.html", "支付宝.html"]
+        }
       ],
-      '/docs/kujiale/': [],
-      '/docs/3dmax/': []
     },
     // 顶部导航栏
     navbar: [
       { text: "首页", link: "/" },
-      { text: "软件教程", children: [
-        { text: 'CAD', link: '/docs/cad/'},
-        { text: '酷家乐', link: '/docs/kujiale/'},
-        { text: '3DMAX', link: '/docs/3dmax/'},
-        ]
-      },
       {
-        text: "联系我",
+        text: config.navbarContact,
         children: [
           { text: "小红书", link: "/docs/contact/小红书.html" },
           { text: "微信", link: "/docs/contact/微信.html" },
           { text: "电话", link: "/docs/contact/电话.html" },
         ],
       },
+      { text: "软件教程", children: [
+        { text: 'CAD', link: '/docs/cad/'},
+        { text: '酷家乐', link: '/docs/kujiale/'},
+        { text: '3DMAX', link: '/docs/3dmax/'},
+        ]
+      },
     ],
     // 公告
-    bulletin: {
-      title: '发现更多',
+    bulletin: config.bulletin.status ?  {
+      title: config.bulletin.title,
       body: [
         {
           type: "text",
-          content: `不想错过最新的设计趋势和作品吗？快来关注我的小红书，让你随时了解最新动态！`,
+          content: config.bulletin.body1Content,
           style: "font-size: 12px;",
         },
         {
@@ -75,14 +81,11 @@ export default defineUserConfig({
         },
         {
           type: "title",
-          content: "小红书",
+          content: config.bulletin.body2.text,
         },
         {
           type: "text",
-          content: `
-          <a href="https://www.xiaohongshu.com/user/profile/5d8d90d00000000001005a6e" target="__blank">
-            <img class="width: 100%;height: auto;" src="https://afu-1255830993.cos.ap-shanghai.myqcloud.com/chato/production/upload/chato_image/avater/98ff94b0c5907111eb6703247ae9132c.png" alt="点击到小红书查看更多最怕"/>
-          </a>`,
+          content: config.bulletin.body2.content,
           style: "font-size: 12px;",
         },
         {
@@ -90,13 +93,11 @@ export default defineUserConfig({
         },
         {
           type: "title",
-          content: "微信",
+          content: config.bulletin.body4.text,
         },
         {
           type: "text",
-          content: `
-            <img alt="微信" src="https://afu-1255830993.cos.ap-shanghai.myqcloud.com/chato/production/upload/chato_image/avater/fd9bde1d98b729883814c0e85f75dd88.jpg" style="width: 100%;height: auto;"/>
-            `,
+          content: config.bulletin.body4.content,
           style: "font-size: 12px;",
         },
         {
@@ -106,13 +107,13 @@ export default defineUserConfig({
           type: "buttongroup",
           children: [
             {
-              text: "投喂",
-              link: "/feeding/reward",
+              text: config.bulletin.body5Text,
+              link: "/docs/feeding/微信.html",
             },
           ],
         },
       ],
-    },
+    } : {}
     // commentConfig: {
     //   type: 'valine',
     //   // options 与 1.x 的 valineConfig 配置一致

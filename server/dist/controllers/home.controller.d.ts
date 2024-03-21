@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { IhomeOptions } from 'src/interface/home';
+import { IHomeNavigationOptions, IhomeOptions } from 'src/interface/home';
 import { HomeService } from 'src/services/home.service';
 export declare class HomeController {
     private readonly homeService;
@@ -13,4 +13,6 @@ export declare class HomeController {
         content: string;
     }>;
     setDetail(body: IhomeOptions): Promise<string>;
+    getNavItem(req: Request): Promise<any>;
+    setNavItem(body: IHomeNavigationOptions): Promise<string>;
 }

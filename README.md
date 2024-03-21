@@ -35,3 +35,21 @@ features:
     details: 我相信，好的设计应该既美观又实用，能够提升我们的生活质量。
 ---
 ### 设计师小赵
+
+<script type="text/javascript">
+function copyToClipboard(text) {
+  var textarea = document.createElement("textarea");
+  textarea.textContent = text;
+  textarea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge.
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    return document.execCommand("copy"); // Security exception may be thrown by some browsers.
+  } catch (ex) {
+    console.warn("Copy to clipboard failed.", ex);
+    return false;
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+</script>

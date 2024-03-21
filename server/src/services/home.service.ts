@@ -2,14 +2,14 @@ import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { join } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import * as matter from 'gray-matter'
-import { IhomeOptions } from 'src/interface/home';
+import { IHomeNavigationOptions, IhomeOptions } from 'src/interface/home';
 import { notNull } from 'src/utils/help';
 
 
 @Injectable()
 export class HomeService {
   /** 
-   * 读取README.md 中的内容，解析出 
+   * 装饰内容：读取README.md 中的内容，解析出 
    * @typedef {Object} MarkdownObject - 组装好的markdown 对象
    * @property {string} title - 标题
    * @property {string} description - 描写
@@ -46,7 +46,7 @@ export class HomeService {
   }
 
   /**
-   * 设置README.md中的内容，但需要先解析出来
+   * 装饰内容：设置README.md中的内容，但需要先解析出来
    * @param {Object} options - 需要被设置到README.md中的值
    * @param {string} options.title - 被设置的标题
    * @param {string} options.description - 被设置的描写词
@@ -87,5 +87,42 @@ export class HomeService {
     } 
 
     return '设置完成'
+  }
+
+  /**
+   * 导航栏、公告： 读取.vuepress/json/config.json中的内容
+  */
+  getHomeNavItem() {
+    try {
+      const basePath =  join(__dirname, '../', '../', '../.vuepress/json/')
+      const filePath = join(basePath, 'config.json')
+      const config = JSON.parse(readFileSync(filePath, 'utf-8'))
+      
+      return config
+    } catch (error) {
+      throw new HttpException('读取失败', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * 导航栏、公告： 存储.vuepress/json/config.json中的内容
+  */
+  setHomeNavItem(options: IHomeNavigationOptions) {
+    try {
+      const basePath =  join(__dirname, '../', '../', '../.vuepress/json/')
+      const filePath = join(basePath, 'config.json')
+      const config = JSON.parse(readFileSync(filePath, 'utf-8'))
+
+      const newConfig ={
+        ...config,
+        ...options
+      }
+      
+      writeFileSync(filePath, JSON.stringify(newConfig, null, 2), 'utf-8')
+
+      return '设置完成'
+    } catch (error) {
+      throw new HttpException('设置失败', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 }

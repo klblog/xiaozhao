@@ -57,6 +57,33 @@ let HomeService = class HomeService {
         }
         return '设置完成';
     }
+    getHomeNavItem() {
+        try {
+            const basePath = (0, path_1.join)(__dirname, '../', '../', '../.vuepress/json/');
+            const filePath = (0, path_1.join)(basePath, 'config.json');
+            const config = JSON.parse((0, fs_1.readFileSync)(filePath, 'utf-8'));
+            return config;
+        }
+        catch (error) {
+            throw new common_1.HttpException('读取失败', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    setHomeNavItem(options) {
+        try {
+            const basePath = (0, path_1.join)(__dirname, '../', '../', '../.vuepress/json/');
+            const filePath = (0, path_1.join)(basePath, 'config.json');
+            const config = JSON.parse((0, fs_1.readFileSync)(filePath, 'utf-8'));
+            const newConfig = {
+                ...config,
+                ...options
+            };
+            (0, fs_1.writeFileSync)(filePath, JSON.stringify(newConfig, null, 2), 'utf-8');
+            return '设置完成';
+        }
+        catch (error) {
+            throw new common_1.HttpException('设置失败', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 };
 exports.HomeService = HomeService;
 exports.HomeService = HomeService = __decorate([

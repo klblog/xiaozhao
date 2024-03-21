@@ -1,4 +1,4 @@
-import { IhomeOptions } from 'src/interface/home';
+import { IHomeNavigationOptions, IhomeOptions } from 'src/interface/home';
 export declare class HomeService {
     getHomeDetailMd(): {
         title: any;
@@ -9,4 +9,6 @@ export declare class HomeService {
         content: string;
     };
     setHomeDetailMd(options: IhomeOptions): string;
+    getHomeNavItem(): any;
+    setHomeNavItem(options: IHomeNavigationOptions): string;
 }

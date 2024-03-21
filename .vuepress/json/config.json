@@ -1,6 +1,26 @@
 {
-  "title": "设计师小赵",
+  "title": "设计师二款",
   "description": "设计师小赵的个人网站",
   "colorMode": "dark",
-  "author": "小赵"
+  "author": "小赵",
+  "autoAddCategoryToNavbar": {
+    "location": 1,
+    "categoryText": "作品集",
+    "tagText": "干货"
+  },
+  "navbarContact": "联系我",
+  "bulletin": {
+    "status": true,
+    "title": "发现更多",
+    "body1Content": "不想错过最新的设计趋势和作品吗？快来关注我的小红书，让你随时了解最新动态！",
+    "body2": {
+      "text": "小红书",
+      "content": "<a href='https://www.xiaohongshu.com/user/profile/5d8d90d00000000001005a6e' target='__blank'> <img class='width: 100%;height: auto;' src='https://afu-1255830993.cos.ap-shanghai.myqcloud.com/chato/production/upload/chato_image/avater/98ff94b0c5907111eb6703247ae9132c.png' alt='点击到小红书查看更多最怕'/></a>"
+    },
+    "body4": {
+      "text": "微信",
+      "content": "<img alt='微信' src='https://afu-1255830993.cos.ap-shanghai.myqcloud.com/chato/production/upload/chato_image/avater/fd9bde1d98b729883814c0e85f75dd88.jpg' style='width: 100%;height: auto;'/>"
+    },
+    "body5Text": "投喂"
+  }
 }

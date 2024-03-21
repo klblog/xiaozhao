@@ -4,7 +4,11 @@ DOMAIN="xz-des.cn"
 DEST_DIR="/var/www/html/$DOMAIN"
 
 # 1、构建
-cd /home/xiaozhao/
+echo "Current directory:"
+pwd
+cd ../
+pwd
+# cd /home/xiaozhao/
 npm run build
 
 # 2、部署

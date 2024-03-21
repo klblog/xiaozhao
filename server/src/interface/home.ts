@@ -3,6 +3,6 @@ export interface IhomeOptions {
   description: string
   tagline: string
   buttons: { text: string, link: string, type: string }[]
-  features: { title: string, details: string }[]
+  features?: { title: string, details: string }[]
   content: string
 }

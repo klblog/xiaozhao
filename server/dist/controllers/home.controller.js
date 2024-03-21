@@ -24,6 +24,10 @@ let HomeController = class HomeController {
         const res = this.homeService.getHomeDetailMd();
         return res;
     }
+    async setDetail(body) {
+        const res = this.homeService.setHomeDetailMd(body);
+        return res;
+    }
 };
 exports.HomeController = HomeController;
 __decorate([
@@ -33,6 +37,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HomeController.prototype, "getDetail", null);
+__decorate([
+    (0, common_1.Post)('/detailSetting'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], HomeController.prototype, "setDetail", null);
 exports.HomeController = HomeController = __decorate([
     (0, common_1.Controller)({ host: host_1.env.base, path: '/api/home' }),
     __metadata("design:paramtypes", [home_service_1.HomeService])

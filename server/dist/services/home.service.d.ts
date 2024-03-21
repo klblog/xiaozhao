@@ -8,5 +8,5 @@ export declare class HomeService {
         features: any;
         content: string;
     };
-    seetHomeDetailMd(options: IhomeOptions): void;
+    setHomeDetailMd(options: IhomeOptions): string;
 }

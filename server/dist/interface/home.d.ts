@@ -7,7 +7,7 @@ export interface IhomeOptions {
         link: string;
         type: string;
     }[];
-    features: {
+    features?: {
         title: string;
         details: string;
     }[];

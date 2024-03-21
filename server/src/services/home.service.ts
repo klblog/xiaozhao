@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { join } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import * as matter from 'gray-matter'
 import { IhomeOptions } from 'src/interface/home';
+import { notNull } from 'src/utils/help';
 
 
 @Injectable()
@@ -25,18 +26,23 @@ export class HomeService {
    * 
   */ 
   getHomeDetailMd() {
-    const basePath = join(__dirname, '../', '../', '../README.md')
-    const md = readFileSync(basePath, 'utf-8')
-    const { data, content } = matter(md)
-
-    return {
-      title: data.bannerBrand.title,
-      description: data.bannerBrand.description,
-      tagline: data.bannerBrand.tagline,
-      buttons: data.bannerBrand.buttons,
-      features: data.features,
-      content
+    try {
+      const basePath = join(__dirname, '../', '../', '../README.md')
+      const md = readFileSync(basePath, 'utf-8')
+      const { data, content } = matter(md)
+  
+      return {
+        title: data.bannerBrand.title,
+        description: data.bannerBrand.description,
+        tagline: data.bannerBrand.tagline,
+        buttons: data.bannerBrand.buttons,
+        features: data.features,
+        content
+      }
+    } catch (error) {
+      throw new HttpException('获取失败', HttpStatus.INTERNAL_SERVER_ERROR)
     }
+
   }
 
   /**
@@ -54,23 +60,32 @@ export class HomeService {
    * @param {Object} options.features.details - 被设置的按钮类型
    * @param {string} options.content - 被设置的底部内容
    */
-  seetHomeDetailMd(options: IhomeOptions) {
-    const basePath = join(__dirname, '../', '../', '../README.md')
-    const mds = readFileSync(basePath, 'utf-8')
-    const { data } = matter(mds)
-    const newData = {
-      ...data,
-      bannerBrand: {
-        bgImage: data.bannerBrand.bgImage,
-        title: options.title,
-        description: options.description,
-        tagline: options.tagline,
-        buttons: options.buttons,
-      },
-      features: data.features
-    }
+  setHomeDetailMd(options: IhomeOptions) {
+    try {
+      const basePath = join(__dirname, '../', '../', '../README.md')
+      const mds = readFileSync(basePath, 'utf-8')
+      const { data } = matter(mds)
+      const newData: any = {
+        ...data,
+        bannerBrand: {
+          bgImage: data.bannerBrand.bgImage,
+          title: options.title,
+          description: options.description,
+          tagline: options.tagline,
+          buttons: options.buttons,
+        },
+      }
 
-    const newMds = matter.stringify(options.content, newData) // 将接收到的内容反向写回到README.md
-    writeFileSync(basePath, newMds)
+      if(notNull(data.features)) {
+        newData.features = data.features
+      }
+  
+      const newMds = matter.stringify(options.content, newData) // 将接收到的内容反向写回到README.md
+      writeFileSync(basePath, newMds)
+    } catch (error) {
+      throw new HttpException('设置失败', HttpStatus.INTERNAL_SERVER_ERROR)
+    } 
+
+    return '设置完成'
   }
 }

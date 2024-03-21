@@ -25,14 +25,16 @@ let ReleaseService = class ReleaseService {
     exec(command) {
         return new Promise((resolve, reject) => {
             (0, child_process_1.exec)(`sh ${command}`, (error, stdout, stderr) => {
-                console.log(error);
                 if (error) {
+                    console.log(error);
                     reject(error);
                 }
                 else if (stderr) {
+                    console.log(stderr);
                     reject(new Error(stderr));
                 }
                 else {
+                    console.log(stdout);
                     resolve(stdout);
                 }
             });

@@ -17,7 +17,9 @@ export default {
     showToast(msg, duration = 2500) {
       this.message = msg;
       this.show = true;
+      // @ts-ignore
       clearTimeout(this.timeoutId);
+      // @ts-ignore
       this.timeoutId = setTimeout(() => {
         this.show = false;
       }, duration);

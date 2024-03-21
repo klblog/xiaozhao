@@ -14,17 +14,20 @@ const app_service_1 = require("./services/app.service");
 const file_controller_1 = require("./controllers/file.controller");
 const file_service_1 = require("./services/file.service");
 const transformInterceptor_1 = require("./interceptor/transformInterceptor");
+const home_controller_1 = require("./controllers/home.controller");
+const home_service_1 = require("./services/home.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [],
-        controllers: [app_controller_1.AppController, file_controller_1.FileController],
+        controllers: [app_controller_1.AppController, file_controller_1.FileController, home_controller_1.HomeController],
         providers: [
             app_service_1.AppService,
             file_service_1.FileService,
             { provide: core_1.APP_INTERCEPTOR, useClass: transformInterceptor_1.TransformInterceptor },
+            home_service_1.HomeService
         ],
     })
 ], AppModule);

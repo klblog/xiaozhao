@@ -1,3 +1,4 @@
 export declare class ReleaseService {
-    releaseVuepress(): Promise<void>;
+    releaseVuepress(): Promise<string>;
+    private exec;
 }

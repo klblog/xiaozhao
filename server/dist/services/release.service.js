@@ -13,18 +13,29 @@ const child_process_1 = require("child_process");
 let ReleaseService = class ReleaseService {
     async releaseVuepress() {
         try {
-            const basePath = (0, path_1.join)(__dirname, '../', '../deploy');
+            const basePath = (0, path_1.join)(__dirname, '../deploy');
             const filePath = (0, path_1.join)(basePath, 'release.sh');
-            (0, child_process_1.exec)(`sh ${filePath}`, (error, stdout, stderr) => {
-                if (error) {
-                    throw new common_1.HttpException(error, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-                return `发布成功: ${stdout}`;
-            });
+            const res = await this.exec(filePath);
+            return `发布成功：${res}`;
         }
         catch (error) {
             throw new common_1.HttpException(error, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    exec(command) {
+        return new Promise((resolve, reject) => {
+            (0, child_process_1.exec)(`sh ${command}`, (error, stdout, stderr) => {
+                if (error) {
+                    reject(error);
+                }
+                else if (stderr) {
+                    reject(new Error(stderr));
+                }
+                else {
+                    resolve(stdout);
+                }
+            });
+        });
     }
 };
 exports.ReleaseService = ReleaseService;

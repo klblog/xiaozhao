@@ -15,7 +15,7 @@ export class FileController {
     return res
   }
   
-  /** 创建文件夹 */
+  /** 创建、删除、修改文件夹 */
   @Post('/create/folder')
   async createFolder(@Body() body, @Req() req: Request) {
     const bodyKeys = Object.keys(body)

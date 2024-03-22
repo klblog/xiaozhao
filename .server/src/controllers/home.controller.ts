@@ -5,7 +5,7 @@ import { IHomeNavigationOptions, IhomeOptions } from 'src/interface/home';
 import { HomeService } from 'src/services/home.service';
 
 
-@Controller({ host: env.base, path: '/api/home' })
+@Controller('/api/home')
 export class HomeController {
   constructor(private readonly homeService : HomeService) {}
 

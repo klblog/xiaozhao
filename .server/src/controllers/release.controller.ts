@@ -4,7 +4,7 @@ import { env } from 'src/config/host';
 import { ReleaseService } from 'src/services/release.service';
 
 
-@Controller({ host: env.base, path: '/api/release' })
+@Controller('/api/release')
 export class ReleaseController {
   constructor(private readonly releaseService : ReleaseService) {}
 

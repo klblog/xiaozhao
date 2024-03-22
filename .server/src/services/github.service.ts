@@ -24,11 +24,12 @@ export class GithubService {
       execCb(`sh ${command}`, (error, stdout, stderr) => {
         if (error) {
           console.log(error)
-          reject(error)
+          // reject(error)
         } else if (stderr) {
           console.log(stderr)
-          reject(new Error(stderr))
+          // reject(new Error(stderr))
         } else {
+          console.log('执行完成了')
           console.log(stdout)
           resolve(stdout)
         }

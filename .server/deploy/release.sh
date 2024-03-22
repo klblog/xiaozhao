@@ -9,11 +9,11 @@ echo "Starting script..."
 echo "Starting build..."
 echo "Current directory:"
 pwd
-cd ../
+cd /home/xiaozhao/
 echo "Directory after changing:"
 pwd
 echo "Running npm build..."
-npm run build
+yarn run build
 echo "Build complete."
 
 # 2、部署

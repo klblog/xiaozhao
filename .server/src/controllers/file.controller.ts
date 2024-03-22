@@ -5,7 +5,7 @@ import { FileService } from '../services/file.service';
 import type  { ICreateFileOptions } from 'src/interface/file';
 import { IFileStatus } from 'src/enums/file';
 
-@Controller({ host: env.base, path: '/api/blogs'})
+@Controller('/api/blogs')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 

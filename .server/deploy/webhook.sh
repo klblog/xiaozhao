@@ -1,6 +1,6 @@
 echo "拉取最新的代码"
 pwd
-cd ../
+cd /home/xiaozhao/
 pwd
 
 echo "确保当前分支是干净的"

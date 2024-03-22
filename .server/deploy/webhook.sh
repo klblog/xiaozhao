@@ -9,5 +9,5 @@ git add .
 git commit -m "拉取最新代码前的commit $(date +'%Y-%m-%d %H:%M:%S')"
 
 echo "开始拉取"
-# git pull origin master
+git pull origin master --rebase
 # echo "拉取完成"

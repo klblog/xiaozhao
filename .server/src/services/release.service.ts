@@ -23,12 +23,9 @@ export class ReleaseService {
  private  exec(command: string): Promise<string> {
   return new Promise((resolve, reject) => {
     execCb(`sh ${command}`, (error, stdout, stderr) => {
-      if (error) {
       console.log(error)
+      if (error) {
         reject(error)
-      } else if (stderr) {
-        console.log(stderr)
-        reject(new Error(stderr))
       } else {
         console.log(stdout)
         resolve(stdout)

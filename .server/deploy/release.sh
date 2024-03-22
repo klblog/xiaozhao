@@ -19,7 +19,7 @@ echo "Build complete."
 # 2、部署
 echo "Starting deployment..."
 echo "Moving ./dist to ${DEST_DIR}..."
-rsync -av --delete ./.vuepress/dist/ $DEST_DIR/
+rsync -av --delete ./.vuepress/dist/ $DEST_DIR/dist/
 echo "Deployment complete."
 
 # 3、 推送

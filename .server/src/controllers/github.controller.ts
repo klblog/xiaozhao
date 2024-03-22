@@ -1,9 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
+import { GithubService } from 'src/services/github.service';
 
-@Controller('/github')
+@Controller('/api/github')
 export class GithubController {
+  constructor(readonly githubService: GithubService) {}
+
   @Get('/webhook')
   getGithub() {
-    return '成功'
+    const res = this.githubService.webHook()
+    return res
   }
 }

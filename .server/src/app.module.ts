@@ -9,16 +9,19 @@ import { HomeController } from './controllers/home.controller';
 import { HomeService } from './services/home.service';
 import { ReleaseController } from './controllers/release.controller';
 import { ReleaseService } from './services/release.service';
+import { GithubController } from './controllers/github.controller';
+import { GithubService } from './services/github.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, FileController, HomeController, ReleaseController],
+  controllers: [AppController, FileController, HomeController, ReleaseController, GithubController],
   providers: [
     AppService,
     FileService,
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
     HomeService,
-    ReleaseService
+    ReleaseService,
+    GithubService
   ],
 })
-export class AppModule {}
+export class AppModule { }

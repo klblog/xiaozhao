@@ -23,10 +23,10 @@ export class GithubService {
     return new Promise((resolve, reject) => {
       execCb(`sh ${command}`, (error, stdout, stderr) => {
         if (error) {
-          console.log(error)
+          console.log(error, '23232323')
           // reject(error)
         } else if (stderr) {
-          console.log(stderr)
+          console.log(stderr, '212')
           // reject(new Error(stderr))
         } else {
           console.log('执行完成了')

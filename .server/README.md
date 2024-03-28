@@ -2,6 +2,7 @@
 
 #### pm2 一些指令的介绍
 + 启动应用：pm2 start app.js（其中 app.js 是你的 Node.js 应用的入口文件）
+ +  如果是通过`npm`来启动： `pm2 start npm --name "my-app" -- run start`
 
 + 列出所有 PM2 管理的应用：pm2 list
 
